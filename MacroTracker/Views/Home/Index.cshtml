@@ -1,0 +1,100 @@
+﻿@model FoodsViewModel
+@{
+    ViewData["Title"] = "Food Page";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Filter area -->
+            <div class="col-md-6">
+                <div class="list-group">
+                    <h1>Filter</h1>
+                    <form method="post" asp-action="Index">
+                        @foreach (string category in Model.Category)
+                        {
+                            <p>
+                                <input type="checkbox"
+                                       name="SelectedCategories[@category]"
+                                       value="true"
+                                @(Model.SelectedCategories.ContainsKey(category) && Model.SelectedCategories[category] ? "checked=\"checked\"" : "") />
+                                <input type="hidden" name="SelectedCategories[@category]" value="false" />
+                                <label>@category</label>
+                            </p>
+                        }
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
+
+
+                    <div id="add-button">
+                        <form method="get" asp-controller="FoodItems" asp-action="Add">
+                            <button type="submit" class="btn btn-primary">Add Food</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nutrition info -->
+            <div class="col-md-6">
+                <div class="container" id="nutrition-info">
+                    <div class="row">
+                        <div class="col border p-3">
+                            <h3>Filtered Total</h3>
+                        </div>
+                        <div class="col border p-3">
+                            <h3>Fat</h3>
+                            <p>@Model.TotalFat</p>
+                        </div>
+                        <div class="col border p-3">
+                            <h3>Carbs</h3>
+                            <p>@Model.TotalCarbs</p>
+                        </div>
+                        <div class="col border p-3">
+                            <h3>Protein</h3>
+                            <p>@Model.TotalProtein</p>
+                        </div>
+                        <div class="col border p-3">
+                            <h3>Calories</h3>
+                            <p>@Model.TotalCalories</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" id="category-totals">
+                    <table class="table">
+                        <thead>
+                            <tr><th>Name</th><th>Category</th><th>Fat</th><th>Carbs</th><th>Protein</th><th>Calories</th></tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Food c in Model.Foods)
+                            {
+                                <tr>
+                                    <td>@c.Name</td>
+                                    <td>@c.Category</td>
+                                    <td>@c.Fat</td>
+                                    <td>@c.Carbs</td>
+                                    <td>@c.Protein</td>
+                                    <td>@c.Calories</td>
+                                    <td>
+                                        <a asp-controller="FoodItems" asp-action="Edit" asp-route-id="@c.FoodId" class="btn btn-primary">Edit</a>
+                                        <a asp-action="Delete" asp-controller="FoodItems" asp-route-id="@c.FoodId" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+﻿@model MacroTracker.Models.Food
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <title>Delete Item</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Food Item</h1>
+        <form asp-controller="FoodItems" asp-action='Delete' asp-route-id="@Model.FoodId" method="post">
+            <input type="hidden" asp-for="FoodId" />
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <p asp-for="Name" class="form-control">@Model.Name</p>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Category" class="form-label"></label>
+                <p asp-for="Category" class="form-control">@Model.Category</p>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">@ViewData["Title"]</button>
+            <a class="btn btn-warning" asp-action="Index" asp-controller="Home">Cancel</a>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and its dependencies (Make sure to add the correct path to the JS files) -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
