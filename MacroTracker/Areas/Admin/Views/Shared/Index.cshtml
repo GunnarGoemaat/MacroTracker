@@ -1,0 +1,44 @@
+﻿@model MacroTracker.Models.UserViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Manage Users</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (MacroTracker.Models.User user in Model.Users)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>
+                    @foreach (string roleName in user.RoleNames)
+                    {
+                        <div>@roleName</div>
+                    }
+                </td>
+                <td>
+                    <form method="post" asp-action="Delete" asp-route-id="@user.Id">
+                        <button type="submit" class="btn btn-danger">Delete User</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="AddToAdmin" asp-route-id="@user.Id">
+                        <button type="submit" class="btn btn-primary">Add To Admin</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="RemoveFromAdmin" asp-route-id="@user.Id">
+                        <button type="submit" class="btn btn-primary">Remove From Admin</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
