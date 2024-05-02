@@ -7,10 +7,10 @@ namespace MacroTracker.Models
     {
         public int FoodId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Name is required.")]
         [StringLength(50)]
         public string Name { get; set; } = string.Empty;
-        [Required]
+        [Required(ErrorMessage = "Category is required.")]
         [StringLength(50)]
         public string Category { get; set; } = string.Empty;
         [Range(0, 1000)]
@@ -22,12 +22,5 @@ namespace MacroTracker.Models
         [Range(0, 10000)]
         public int Calories { get; set; }
 
-    }
-    public class User
-    {
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        [JsonIgnore]
-        public string FullName => FirstName + " " + LastName;
     }
 }
